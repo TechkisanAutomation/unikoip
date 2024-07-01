@@ -32,6 +32,7 @@ router.post('/contact', async function(req, res) {
   
   var name = req.body.name;
   var email = req.body.email;
+  var message = req.body.message;
   
   
   const transporter = nodemail.createTransport({
