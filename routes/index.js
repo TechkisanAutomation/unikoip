@@ -5,6 +5,8 @@ const contactmodel=require("../models/contactus-model")
 const passport = require('passport')
 const passportlocal=require('passport-local')
 const nodemail=require("nodemailer")
+const { body, validationResult } = require('express-validator');
+
 
 passport.use(new passportlocal(usermodel.authenticate()))
 
@@ -36,12 +38,13 @@ router.post('/contact', async function(req, res) {
   
   
   const transporter = nodemail.createTransport({
-    service: 'gmail',
+    host: 'smtp.ethereal.email',
+    port: 587,
     auth: {
-      user: 'praduman.228@gmail.com',
-      pass: 'awys dwnf ejxq dpvy'
+        user: 'uriel.morissette@ethereal.email',
+        pass: 'jQGY2z17vbHEXcg6ma'
     }
-  });
+})
   const mailOptions = {
     from: 'praduman.228@gmail.com',
     to: email,

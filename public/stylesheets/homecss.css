@@ -880,7 +880,7 @@ section.t-bq-section {
 
 
 
-/* ========== 07. Horace ========== */
+
 
 .t-bq-quote-horace {
   position: relative;
@@ -1045,37 +1045,38 @@ section.t-bq-section {
   width: 200px;
   height: 300px;
 }
+
 #contactus{
   background-color: white;
   width: 100%;
   border-top: 2px solid black;
   display: flex;
-  flex-direction: column; /* Default to column for mobile */
+  flex-direction: column; 
 }
 
-/* Container 1 adjustments */
+
 #con1{
-  width: 100%; /* Adjusted for mobile */
+  width: 100%; 
   padding-top: 2%;
   padding-bottom: 2%;
-  order: 2; /* Move to bottom in mobile view */
+  order: 2; 
 }
 
-/* Contact form adjustments */
+
 .contactform{
   display: flex;
   flex-wrap: wrap;
-  row-gap: 20px; /* Adjusted for mobile */
+  row-gap: 20px; 
   padding-top: 2%;
-  column-gap: 10px; /* Adjusted for mobile */
-  padding-left: 5%; /* Adjusted for mobile */
-  padding-right: 5%; /* Adjusted for mobile */
+  column-gap: 10px; 
+  padding-left: 5%; 
+  padding-right: 5%; 
 }
 
 .contactform button{
-  width: 100%; /* Adjusted for mobile */
-  padding-top: 2%; /* Adjusted for mobile */
-  padding-bottom: 2%; /* Adjusted for mobile */
+  width: 100%; 
+  padding-top: 2%; 
+  padding-bottom: 2%; 
   background-color: black;
   color: white;
 }
@@ -1085,16 +1086,17 @@ section.t-bq-section {
   padding-right: 2%;
   padding-top: 1%;
   padding-bottom: 1%;
-  width: 100%; /* Adjusted for mobile */
+  width: 100%; 
 }
 
-/* Container 2 adjustments */
+
 #con2{
   padding-top: 2%;
-  width: 100%; /* Adjusted for mobile */
+  width: 100%;
   background-color: black;
   color: white;
-  order: 1; /* Move to top in mobile view */
+  order: 1; 
+  padding-bottom: 2%;
 }
 
 #con2 h1{
@@ -1138,14 +1140,53 @@ section.t-bq-section {
 }
 
 /* Media Queries */
-@media (min-width: 600px) {
+@media (min-width: 600px) and (max-width: 899px) {
   #contactus {
-    flex-direction: row; 
+    flex-direction: column; /* Maintain column for tablets */
   }
 
   #con1 {
-    width: 65%; 
-    order: 1; 
+    width: 100%; /* Adjusted for tablets */
+    order: 2; /* Maintain order for tablets */
+  }
+
+  .contactform {
+    row-gap: 30px; /* Adjust for tablets */
+    column-gap: 20px; /* Adjust for tablets */
+    padding-left: 8%;
+    padding-right: 8%;
+  }
+
+  .contactform button {
+    width: 40%; /* Reduce size for tablets */
+    padding-top: 0.5%; /* Reduce height */
+    padding-bottom: 0.5%; /* Reduce height */
+  }
+
+  #con1 input, #con1 textarea {
+    width: 48%; /* Adjust for tablets */
+  }
+
+  #con2 {
+    width: 100%; /* Adjusted for tablets */
+    order: 1; /* Maintain order for tablets */
+    padding-bottom: 2%;
+  }
+
+  .loc, .loc1 {
+    padding-left: 8%; /* Adjust for tablets */
+    padding-right: 8%; /* Adjust for tablets */
+  }
+}
+
+@media (min-width: 900px) {
+  #contactus {
+    flex-direction: row; /* Revert to original for larger screens */
+  }
+
+  #con1 {
+    width: 65%; /* Revert to original for larger screens */
+    order: 1; /* Normal order for larger screens */
   }
 
   .contactform {
@@ -1155,16 +1196,19 @@ section.t-bq-section {
   }
 
   .contactform button {
-    width: 30%;
+    width: 20%; /* Reduce size for laptops */
+    padding-top: 0.5%; /* Reduce height */
+    padding-bottom: 0.5%; /* Reduce height */
   }
 
   #con1 input, #con1 textarea {
-    width: 40%; 
+    width: 40%; /* Revert to original for larger screens */
   }
 
   #con2 {
-    width: 35%;
+    width: 35%; 
     order: 2; 
+    padding-bottom: 2%;
   }
 
   .loc, .loc1 {

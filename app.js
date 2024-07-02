@@ -8,10 +8,9 @@ const passport=require('passport');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./models/userdata-model');
 const bodyParser = require('body-parser');
+const SibApiV3Sdk = require('sib-api-v3-sdk');
 require("dotenv").config()
 var app = express();
-
-// const path =require('path');
 
 const db = require("./configs/mongoose-connection")
 
