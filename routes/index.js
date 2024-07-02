@@ -38,11 +38,11 @@ router.post('/contact', async function(req, res) {
   
   
   const transporter = nodemail.createTransport({
-    host: 'smtp.ethereal.email',
+    host: 'smtp-relay.brevo.com',
     port: 587,
     auth: {
-        user: 'uriel.morissette@ethereal.email',
-        pass: 'jQGY2z17vbHEXcg6ma'
+        user: '77c3e7001@smtp-brevo.com',
+        pass: 'OF9jatNG7Lxfc03z'
     }
 })
   const mailOptions = {
@@ -52,7 +52,15 @@ router.post('/contact', async function(req, res) {
     text: `Dear ${name},\n\nThank you for reaching out to us. We have received your query and will get back to you shortly.\n\nRegards,\nUNIKO IPR Services`
    
   };
+  const mailOptions2 = {
+    from: 'praduman.228@gmail.com',
+    to: "praduman.228@gmail.com",
+    subject: 'User Details',
+    text: `User Name :- ${name},\n\n User Email:- ${email}.\n\n  User Message ${message}\nUNIKO IPR Services`
+   
+  };
   await transporter.sendMail(mailOptions);
+  await transporter.sendMail(mailOptions2);
   res.redirect("/")
 })
 
