@@ -5,18 +5,20 @@ const contactmodel=require("../models/contactus-model")
 const passport = require('passport')
 const passportlocal=require('passport-local')
 const nodemail=require("nodemailer")
+
 const { body, validationResult } = require('express-validator');
 
 
 passport.use(new passportlocal(usermodel.authenticate()))
 
 router.get('/login', function(req, res) {
-  res.render('login');
+  const flashmessage =req.flash("message")
+  res.render('login',{flashmessage})
 });
 
 
 router.post('/contact', async function(req, res) {
-  const newcontact = await contactmodel.create({
+ try{ const newcontact = await contactmodel.create({
     name:req.body.name,
     email:req.body.email,
     conutry:req.body.conutry,
@@ -41,27 +43,29 @@ router.post('/contact', async function(req, res) {
     host: 'smtp-relay.brevo.com',
     port: 587,
     auth: {
-        user: '77c3e7001@smtp-brevo.com',
-        pass: 'OF9jatNG7Lxfc03z'
+        user: `77c3e7001@smtp-brevo.com`,
+        pass: `${process.env.PASSWORD}`
     }
 })
   const mailOptions = {
-    from: 'praduman.228@gmail.com',
+    from:`${process.env.CLIENT_MAIL}`,
     to: email,
     subject: 'Thank you for contacting us!',
     text: `Dear ${name},\n\nThank you for reaching out to us. We have received your query and will get back to you shortly.\n\nRegards,\nUNIKO IPR Services`
    
   };
   const mailOptions2 = {
-    from: 'praduman.228@gmail.com',
-    to: "praduman.228@gmail.com",
+    from: `${process.env.CLIENT_MAIL}`,
+    to: `${process.env.CLIENT_MAIL}`,
     subject: 'User Details',
-    text: `User Name :- ${name},\n\n User Email:- ${email}.\n\n  User Message ${message}\nUNIKO IPR Services`
+    text: `User Name :- ${name},\n\n User Email:- ${email}.\n\n  User Message:- ${message}\nUNIKO IPR Services`
    
   };
   await transporter.sendMail(mailOptions);
   await transporter.sendMail(mailOptions2);
-  res.redirect("/")
+  res.redirect("/")}catch (err) {
+    res.redirect("/")
+  }
 })
 
 
@@ -74,24 +78,6 @@ router.get('/services', async function(req, res) {
     res.render('services',{req})
   }
   });
-
-
-
-router.get('/blog',isLoggedIn,async function(req, res) {
-  const users= await usermodel.findOne({username:req.session.passport.user})
-  const posts=await postmodel.find().populate("user")
-  posts.forEach(post => {
-    if (post.user) {
-        console.log(post.user.name);
-    }
-});
-  
-  res.render('blog',{users, posts,});
-})
-
-router.get('/edit', function(req, res) {
-  res.render('edit');
-});
 
 
 router.get('/' , async function(req, res) {
@@ -113,47 +99,40 @@ router.get('/logout', function(req, res, next){
     res.redirect('/');
   });
 })
-router.post('/post', async function(req, res) {
-  var user= await usermodel.findOne({username:req.session.passport.user})
-  var post=await postmodel.create({
-    blogtext: req.body.blogtext,
-    user:user._id
-  })
- 
-  user.posts.push(post._id)
-  await user.save()
-  res.redirect('/blog')
 
-  })
-router.post('/register', function(req, res) {
+router.post('/register', async function(req, res) {
+try{
+  const user= await usermodel.findOne({email:req.body.email});
+  if (user) {
+    req.flash("message","User already registered")
+    res.redirect("/login")
+
+  }
+  else{
   const userdata=new usermodel({
-    name:req.body.name,
-    username:req.body.username,
-    email:req.body.email
-   })
-  usermodel.register(userdata,req.body.password)
-  .then(function(){
-    passport.authenticate("local")(req,res,function(){
-      res.redirect('/')
-    })
-})
+  name:req.body.name,
+  username:req.body.username,
+  email:req.body.email
+  })
+usermodel.register(userdata,req.body.password)
+.then(function(){
+  passport.authenticate("local")(req,res,function(){
+    res.redirect('/')
+  })
+})}
+}catch(err){
+  res.redirect("/login")
+  console.log(err.message)
+}
 })
 
 router.post('/login', passport.authenticate("local",{
   successRedirect:"/",
   failureRedirect:"/login",
-  failureFlash:true
+  failureFlash:true,
 }),function(req, res) {})
 
 
-function isLoggedIn(req, res, next) {
-  
-  if (req.isAuthenticated()) {
-
-    return next();
-  }
-  res.redirect('/login');
-}
 
 
 

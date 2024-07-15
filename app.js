@@ -7,8 +7,7 @@ const expressSession=require('express-session');
 const passport=require('passport');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./models/userdata-model');
-const bodyParser = require('body-parser');
-const SibApiV3Sdk = require('sib-api-v3-sdk');
+const flash = require('connect-flash')
 require("dotenv").config()
 var app = express();
 
@@ -23,7 +22,7 @@ app.use(expressSession({
   saveUninitialized:false,
   secret:'secret',
 }));
-
+app.use(flash())
 app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser(usersRouter.serializeUser())
