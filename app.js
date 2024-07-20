@@ -7,11 +7,9 @@ const expressSession=require('express-session');
 const passport=require('passport');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./models/userdata-model');
-const bodyParser = require('body-parser');
+const flash = require('connect-flash')
 require("dotenv").config()
 var app = express();
-
-// const path =require('path');
 
 const db = require("./configs/mongoose-connection")
 
@@ -24,7 +22,7 @@ app.use(expressSession({
   saveUninitialized:false,
   secret:'secret',
 }));
-
+app.use(flash())
 app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser(usersRouter.serializeUser())

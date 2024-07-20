@@ -3,29 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  
+  <title>UNIKO IPR SERVICES</title>
+  <link rel="icon" type="image/x-icon" href="../images/loho.png">
   <link rel="stylesheet" href="../stylesheets/loginstyle.css">
 </head>
 <body>
   <div class="container right-panel-active">
     <div class="container__form container--signup">
-      <form class="form" id="form1" action="/register" method="post" >
+      <form class="form" id="form1" action="/register" method="post">
         <h2 class="form__title">Register</h2> 
-        <input type="text" placeholder="Name" class="input" name="name" />
-        <input type="text" placeholder="Username" class="input" name="username" />
-        <input type="email" placeholder="Email" class="input" name="email" />
-        <input type="password" placeholder="Password" class="input" name="password"/>
+        <% if(flashmessage){ %>
+            
+          <h3 style="color: red;"> <%= flashmessage %></h3>
+      
+          <% }%>
+        <input type="text" placeholder="Name" class="input" name="name" required />
+        <input type="text" placeholder="Username" class="input" name="username" required/>
+        <input type="email" placeholder="Email" class="input" name="email" required />
+        <input type="password" placeholder="Password" class="input" name="password" required />
         <button class="btn" type="submit">Sign Up</button>
       </form>
     </div>
   
-    <!-- Sign In -->
+    
     <div class="container__form container--signin">
       <form class="form" id="form2" action="/login" method="post" >
         <h2 class="form__title">Log In</h2>
-        <input type="text" placeholder="username" class="input" name="username" />
-        <input type="password" placeholder="Password" class="input" name="password"/>
-        <a href="#" class="link">Forgot your password?</a>
+        <input type="text" placeholder="username" class="input" name="username" required />
+        <input type="password" placeholder="Password" class="input" name="password" required/>
         <button class="btn" type="submit">Sign In</button>
       </form>
     </div>
@@ -57,8 +63,6 @@ signInBtn.addEventListener("click", () => {
 signUpBtn.addEventListener("click", () => {
 	container.classList.add("right-panel-active");
 });
-
-
 
   </script>
 </body>
